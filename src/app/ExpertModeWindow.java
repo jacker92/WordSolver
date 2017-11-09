@@ -1,5 +1,7 @@
 package app;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -16,16 +18,18 @@ public class ExpertModeWindow {
     private Button searchButton;
     private Button backToNormalModeButton;
     private Label wordLengthLabel;
+    private Ratkaisin ratkaisin;
 
-    public ExpertModeWindow() {
+    public ExpertModeWindow(Ratkaisin ratkaisin) {
         this.listView = new ListView();
         this.wordLengthComboBox = new ComboBox();
         this.searchButton = new Button("Search");
         this.backToNormalModeButton = new Button("Back to normal mode");
-        this.wordLengthLabel = new Label("Length");
+        this.wordLengthLabel = new Label("Word length");
+        this.ratkaisin = ratkaisin;
     }
 
-    public Parent getParent() {
+    protected Parent getParent() {
         FlowPane pane = new FlowPane();
         GridPane grid = new GridPane();
 
@@ -38,11 +42,11 @@ public class ExpertModeWindow {
         grid.add(listView, 0, 2);
         grid.add(searchButton, 0, 3);
         grid.add(backToNormalModeButton, 0, 4);
-  
-        grid.setAlignment(Pos.CENTER);
+
+        pane.setAlignment(Pos.CENTER);
 
         pane.getChildren().add(grid);
-      
+
         return pane;
     }
 
@@ -84,6 +88,25 @@ public class ExpertModeWindow {
 
     public void setWordLengthLabel(Label wordLengthLabel) {
         this.wordLengthLabel = wordLengthLabel;
+    }
+
+    protected void setComboBoxItems() {
+        int count = ratkaisin.getSana().length();
+        List<Integer> list = new ArrayList<>();
+        for (int i = 1; i <= count; i++) {
+            list.add(i);
+        }
+        wordLengthComboBox.getItems().clear();
+        wordLengthComboBox.getItems().addAll(list);
+    }
+
+    protected void setListViewItems(List<String> list) {
+        listView.getItems().clear();
+        listView.getItems().setAll(list);
+    }
+
+    public Ratkaisin getRatkaisin() {
+        return ratkaisin;
     }
     
     

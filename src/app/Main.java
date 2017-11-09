@@ -1,6 +1,7 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -16,6 +17,7 @@ public class Main extends Application {
     private Parent insertWordsWindowParent;
     private Stage primary;
     private Scene showResultsScene;
+    private ExpertRatkaisin expert;
 
     @Override
     public void start(Stage primary) {
@@ -23,8 +25,9 @@ public class Main extends Application {
         this.primary = primary;
         insertWordsWindow = new InsertWordsWindow();
         showResultsWindow = new ShowResultsWindow();
-        expertModeWindow = new ExpertModeWindow();
+        expertModeWindow = new ExpertModeWindow(showResultsWindow.getRatkaisin());
         insertWordsWindowParent = insertWordsWindow.getParent();
+        expert = new ExpertRatkaisin(expertModeWindow);
 
         Scene insertWordScene = new Scene(insertWordsWindowParent, 300, 250);
         showResultsScene = new Scene(showResultsWindow.getParent(), 300, 250);
@@ -47,6 +50,7 @@ public class Main extends Application {
         });
         
         showResultsWindow.getExpertButton().setOnAction(event -> {
+            expertModeWindow.setComboBoxItems();
             primary.setScene(expertModeScene);
         });
         
@@ -55,7 +59,7 @@ public class Main extends Application {
         });
         
         expertModeWindow.getSearchButton().setOnAction(event -> {
-            
+            handleExpertSearching(expertModeWindow.getWordLengthComboBox().getSelectionModel().getSelectedIndex());
         });
 
         insertWordsWindowParent.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
@@ -106,6 +110,11 @@ public class Main extends Application {
         } catch (Exception e) {
 
         }
+    }
+
+    private void handleExpertSearching(int index) {
+        List<String> list = expert.getAllPossibleWordsByLength(index);
+        expertModeWindow.setListViewItems(list);
     }
 
 }

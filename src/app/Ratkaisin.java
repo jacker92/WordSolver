@@ -45,7 +45,8 @@ public class Ratkaisin {
 
     }
 
-    public Set<String> ratkaiseSana(String sana) {
+    public Set<String> ratkaiseSana(String sana, int times) {
+        this.sana = sana;
         Set<String> palautettava = new HashSet<>();
         Random r = new Random();
         StringBuffer uusiSana = new StringBuffer();
@@ -60,9 +61,8 @@ public class Ratkaisin {
             for (int j = 0; j < sana.length(); j++) {
                 sananKirjaimet.add(sana.charAt(j));
             }
-
-            int times = 0;
-            while (times < 500000) {
+            int count = 0;
+            while (count < times) {
                 sananKirjaimetKopio.addAll(sananKirjaimet);
 
                 for (int k = 0; k < i; k++) {
@@ -73,7 +73,7 @@ public class Ratkaisin {
 
                 palautettava.add(uusiSana.toString());
 
-                times++;
+                count++;
                 sananKirjaimetKopio.clear();
                 uusiSana.replace(0, uusiSana.length(), "");
             }
@@ -84,39 +84,16 @@ public class Ratkaisin {
     }
 
     public boolean onSuomea(String word) {
-        // First let's check if word is found in TreeSet
-        if (suomenkielenSanat.contains(word)) {
-            return true;
-        }
-        return false;
+        return suomenkielenSanat.contains(word);
+    }
+
+    public String getSana() {
+        return sana;
+    } 
+
+    public TreeSet<String> getSuomenkielenSanat() {
+        return suomenkielenSanat;
     }
     
-    public boolean isFinnishExpertMode(String word) {
-              // First let's check if word is found in TreeSet
-        if (suomenkielenSanat.contains(word)) {
-            return true;
-        }
-        for (String string : suomenkielenSanat) {
-            if (string.length() >= word.length()) {
-                if (string.substring(0, word.length()).equals(word)) {
-                    // Let's check that last letter isn't M, K,V tai J
-                    if (word.charAt(word.length() - 1) != 'm' && word.charAt(word.length() - 1) != 'k'
-                            && word.charAt(word.length() - 1) != 'v' && word.charAt(word.length() - 1) != 'j'
-                            && word.charAt(word.length() - 1) != 'p') {
-                        // Let's check that last letter isn't r if word length is 4 or less
-                        if (word.length() <= 4 && word.charAt(word.length() - 1) == 'r') {
-                            continue;
-                            // Let's check that last letter isn't l if word length is 4 or less
-                        } else if (word.length() <= 4 && word.charAt(word.length() - 1) == 'l') {
-                            continue;
-                        } else {
-                            return true;
-                        }
-
-                    }
-                }
-            }
-        }
-        return false;
-    }
+    
 }

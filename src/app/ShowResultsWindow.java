@@ -64,7 +64,7 @@ public class ShowResultsWindow {
     }
 
     public Set<String> solveWord() {
-        return this.ratkaisin.ratkaiseSana(this.word);
+        return this.ratkaisin.ratkaiseSana(this.word, 10000);
     }
 
     public Button getBackButton() {
@@ -90,10 +90,13 @@ public class ShowResultsWindow {
     public Button getExpertButton() {
         return expertButton;
     }
-    
 
+    public Ratkaisin getRatkaisin() {
+        return ratkaisin;
+    }
+    
    public void processWord() {
-      Set<String> list =  ratkaisin.ratkaiseSana(this.word);
+      Set<String> list =  ratkaisin.ratkaiseSana(this.word, 10000);
      allPossibleWords = list.stream().filter(s -> ratkaisin.onSuomea(s))
     .collect(Collectors.toCollection(ArrayList::new));
      Collections.sort(allPossibleWords, new ComparatorByLength());
