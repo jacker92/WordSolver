@@ -2,7 +2,6 @@ package app;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -11,7 +10,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -20,8 +18,8 @@ public class ShowResultsWindow {
 
     private ListView listView;
     private Button backButton;
+    private Button expertButton;
     private TextField characterCountTextField;
-    private ScrollPane scroll;
     private Label filterLabel;
     private Ratkaisin ratkaisin;
     private String word;
@@ -31,8 +29,8 @@ public class ShowResultsWindow {
 
         listView = new ListView();
         backButton = new Button("Enter New Word");
+        expertButton = new Button("Expert Mode");
         characterCountTextField = new TextField();
-        scroll = new ScrollPane(listView);
         filterLabel = new Label("Filter by number of characters");
         ratkaisin = new Ratkaisin();
     }
@@ -43,12 +41,14 @@ public class ShowResultsWindow {
         
         grid.setVgap(10);
         grid.setHgap(10);
+        
         listView.setPrefSize(100, 100);
 
         grid.add(listView, 0, 0);
         grid.add(filterLabel, 0, 1);
         grid.add(characterCountTextField, 0, 2);
         grid.add(backButton, 0, 3);
+        grid.add(expertButton, 1, 3);
 
         pane.getChildren().add(grid);
         pane.setAlignment(Pos.CENTER);
@@ -86,7 +86,10 @@ public class ShowResultsWindow {
     public String getWord() {
         return word;
     }
-    
+
+    public Button getExpertButton() {
+        return expertButton;
+    }
     
 
    public void processWord() {

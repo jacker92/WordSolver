@@ -12,6 +12,7 @@ public class Main extends Application {
 
     private ShowResultsWindow showResultsWindow;
     private InsertWordsWindow insertWordsWindow;
+    private ExpertModeWindow expertModeWindow;
     private Parent insertWordsWindowParent;
     private Stage primary;
     private Scene showResultsScene;
@@ -22,10 +23,13 @@ public class Main extends Application {
         this.primary = primary;
         insertWordsWindow = new InsertWordsWindow();
         showResultsWindow = new ShowResultsWindow();
+        expertModeWindow = new ExpertModeWindow();
         insertWordsWindowParent = insertWordsWindow.getParent();
 
         Scene insertWordScene = new Scene(insertWordsWindowParent, 300, 250);
         showResultsScene = new Scene(showResultsWindow.getParent(), 300, 250);
+        Scene expertModeScene = new Scene (expertModeWindow.getParent(), 300, 250);
+        
 
         // Adding listeners
         insertWordsWindow.getButton().setOnAction(event -> {
@@ -40,6 +44,18 @@ public class Main extends Application {
 
         showResultsWindow.getCharacterCountTextField().setOnAction(event -> {
             filterByCharacterCount();
+        });
+        
+        showResultsWindow.getExpertButton().setOnAction(event -> {
+            primary.setScene(expertModeScene);
+        });
+        
+        expertModeWindow.getBackToNormalModeButton().setOnAction(event -> {
+            primary.setScene(showResultsScene);
+        });
+        
+        expertModeWindow.getSearchButton().setOnAction(event -> {
+            
         });
 
         insertWordsWindowParent.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {

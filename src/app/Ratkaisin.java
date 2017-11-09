@@ -83,24 +83,31 @@ public class Ratkaisin {
 
     }
 
-    public boolean onSuomea(String sana) {
+    public boolean onSuomea(String word) {
         // First let's check if word is found in TreeSet
-        if (suomenkielenSanat.contains(sana)) {
+        if (suomenkielenSanat.contains(word)) {
             return true;
         }
-        // Following code was way too heavy for longer words
+        return false;
+    }
+    
+    public boolean isFinnishExpertMode(String word) {
+              // First let's check if word is found in TreeSet
+        if (suomenkielenSanat.contains(word)) {
+            return true;
+        }
         for (String string : suomenkielenSanat) {
-            if (string.length() >= sana.length()) {
-                if (string.substring(0, sana.length()).equals(sana)) {
+            if (string.length() >= word.length()) {
+                if (string.substring(0, word.length()).equals(word)) {
                     // Let's check that last letter isn't M, K,V tai J
-                    if (sana.charAt(sana.length() - 1) != 'm' && sana.charAt(sana.length() - 1) != 'k'
-                            && sana.charAt(sana.length() - 1) != 'v' && sana.charAt(sana.length() - 1) != 'j'
-                            && sana.charAt(sana.length() - 1) != 'p') {
+                    if (word.charAt(word.length() - 1) != 'm' && word.charAt(word.length() - 1) != 'k'
+                            && word.charAt(word.length() - 1) != 'v' && word.charAt(word.length() - 1) != 'j'
+                            && word.charAt(word.length() - 1) != 'p') {
                         // Let's check that last letter isn't r if word length is 4 or less
-                        if (sana.length() <= 4 && sana.charAt(sana.length() - 1) == 'r') {
+                        if (word.length() <= 4 && word.charAt(word.length() - 1) == 'r') {
                             continue;
                             // Let's check that last letter isn't l if word length is 4 or less
-                        } else if (sana.length() <= 4 && sana.charAt(sana.length() - 1) == 'l') {
+                        } else if (word.length() <= 4 && word.charAt(word.length() - 1) == 'l') {
                             continue;
                         } else {
                             return true;
