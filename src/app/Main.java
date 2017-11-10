@@ -1,11 +1,11 @@
 package app;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.*;
+import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.stage.Stage;
 
@@ -17,7 +17,7 @@ public class Main extends Application {
     private Parent insertWordsWindowParent;
     private Stage primary;
     private Scene showResultsScene;
-    private ExpertRatkaisin expert;
+    private ExpertSolver expert;
 
     @Override
     public void start(Stage primary) {
@@ -25,9 +25,9 @@ public class Main extends Application {
         this.primary = primary;
         insertWordsWindow = new InsertWordsWindow();
         showResultsWindow = new ShowResultsWindow();
-        expertModeWindow = new ExpertModeWindow(showResultsWindow.getRatkaisin());
+        expertModeWindow = new ExpertModeWindow(showResultsWindow.getSolver());
         insertWordsWindowParent = insertWordsWindow.getParent();
-        expert = new ExpertRatkaisin(expertModeWindow);
+        expert = new ExpertSolver(expertModeWindow);
 
         Scene insertWordScene = new Scene(insertWordsWindowParent, 300, 250);
         showResultsScene = new Scene(showResultsWindow.getParent(), 300, 250);
@@ -43,10 +43,12 @@ public class Main extends Application {
             primary.setScene(insertWordScene);
             insertWordsWindow.getSolvableTextField().setText("");
             insertWordsWindow.getSolvableTextField().requestFocus();
+            
         });
 
         showResultsWindow.getCharacterCountTextField().setOnAction(event -> {
             filterByCharacterCount();
+            listViewScrollBarReset();
         });
         
         showResultsWindow.getExpertButton().setOnAction(event -> {
@@ -75,6 +77,11 @@ public class Main extends Application {
         primary.show();
     }
 
+    private void listViewScrollBarReset() {
+        ScrollBar scroll = (ScrollBar) showResultsWindow.getListView().lookupAll(".scroll-bar").iterator().next();
+        scroll.setValue(0);
+    }
+
     public static void main(String[] args) {
         launch();
     }
@@ -86,6 +93,8 @@ public class Main extends Application {
             // then checking if word contains only characters
             for (int i = 0; i < solvableWord.length(); i++) {
                 if (!Character.isLetter(solvableWord.charAt(i))) {
+                   new Alert(Alert.AlertType.ERROR, "Please enter only letters!").showAndWait(); 
+                   insertWordsWindow.getSolvableTextField().setText("");
                     return;
                 }
             }
@@ -93,6 +102,7 @@ public class Main extends Application {
             showResultsWindow.getCharacterCountTextField().requestFocus();
             primary.setScene(showResultsScene);
             showResultsWindow.processWord();
+            listViewScrollBarReset();
         }
     }
 
@@ -108,7 +118,7 @@ public class Main extends Application {
             }
             showResultsWindow.getCharacterCountTextField().setText("");
         } catch (Exception e) {
-
+            new Alert(Alert.AlertType.ERROR, "Please enter valid number!").showAndWait();
         }
     }
 

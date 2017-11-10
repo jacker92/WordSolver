@@ -1,13 +1,9 @@
 package app;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 
@@ -18,15 +14,15 @@ public class ExpertModeWindow {
     private Button searchButton;
     private Button backToNormalModeButton;
     private Label wordLengthLabel;
-    private Ratkaisin ratkaisin;
+    private Solver solver;
 
-    public ExpertModeWindow(Ratkaisin ratkaisin) {
+    public ExpertModeWindow(Solver ratkaisin) {
         this.listView = new ListView();
         this.wordLengthComboBox = new ComboBox();
         this.searchButton = new Button("Search");
         this.backToNormalModeButton = new Button("Back to normal mode");
         this.wordLengthLabel = new Label("Word length");
-        this.ratkaisin = ratkaisin;
+        this.solver = ratkaisin;
     }
 
     protected Parent getParent() {
@@ -91,7 +87,7 @@ public class ExpertModeWindow {
     }
 
     protected void setComboBoxItems() {
-        int count = ratkaisin.getSana().length();
+        int count = solver.getWord().length();
         List<Integer> list = new ArrayList<>();
         for (int i = 1; i <= count; i++) {
             list.add(i);
@@ -105,8 +101,8 @@ public class ExpertModeWindow {
         listView.getItems().setAll(list);
     }
 
-    public Ratkaisin getRatkaisin() {
-        return ratkaisin;
+    public Solver getSolver() {
+        return solver;
     }
     
     

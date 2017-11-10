@@ -1,18 +1,11 @@
 package app;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 
 public class ShowResultsWindow {
 
@@ -21,7 +14,7 @@ public class ShowResultsWindow {
     private Button expertButton;
     private TextField characterCountTextField;
     private Label filterLabel;
-    private Ratkaisin ratkaisin;
+    private Solver solver;
     private String word;
     private List<String> allPossibleWords;
 
@@ -32,7 +25,7 @@ public class ShowResultsWindow {
         expertButton = new Button("Expert Mode");
         characterCountTextField = new TextField();
         filterLabel = new Label("Filter by number of characters");
-        ratkaisin = new Ratkaisin();
+        solver = new Solver();
     }
 
     public Parent getParent() {
@@ -49,7 +42,6 @@ public class ShowResultsWindow {
         grid.add(characterCountTextField, 0, 2);
         grid.add(backButton, 0, 3);
         grid.add(expertButton, 1, 3);
-
         pane.getChildren().add(grid);
         pane.setAlignment(Pos.CENTER);
         return pane;
@@ -61,10 +53,6 @@ public class ShowResultsWindow {
     
     public void setWord(String word) {
         this.word = word;
-    }
-
-    public Set<String> solveWord() {
-        return this.ratkaisin.ratkaiseSana(this.word, 10000);
     }
 
     public Button getBackButton() {
@@ -91,13 +79,13 @@ public class ShowResultsWindow {
         return expertButton;
     }
 
-    public Ratkaisin getRatkaisin() {
-        return ratkaisin;
+    public Solver getSolver() {
+        return solver;
     }
     
    public void processWord() {
-      Set<String> list =  ratkaisin.ratkaiseSana(this.word, 10000);
-     allPossibleWords = list.stream().filter(s -> ratkaisin.onSuomea(s))
+      Set<String> list =  solver.solveWord(this.word, 10000);
+     allPossibleWords = list.stream().filter(s -> solver.isFinnish(s))
     .collect(Collectors.toCollection(ArrayList::new));
      Collections.sort(allPossibleWords, new ComparatorByLength());
      listView.getItems().clear();
