@@ -98,5 +98,18 @@ public class ShowResultsWindow {
         processWord(solvableWord);
         listViewScrollBarReset();
     }
+    
+    public void filterByCharacterCount() throws Exception {
+           int number = Integer.parseInt(characterCountTextField.getText());
+            // Proceed only if number user gave is not bigger than word length
+            if (number <= solver.getWord().length()) {
+                listView.getItems().clear();
+                listView.getItems().addAll(
+                        allPossibleWords.stream().filter(n -> n.length() == number)
+                                .collect(Collectors.toCollection(ArrayList::new)));
+            }
+            characterCountTextField.setText("");
+            listViewScrollBarReset();
+    }
 
 }

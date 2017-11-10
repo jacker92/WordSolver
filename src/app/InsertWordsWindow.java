@@ -47,4 +47,20 @@ public class InsertWordsWindow {
         solvableTextField.setText("");
         solvableTextField.requestFocus();
     }
+
+    public String checkForValidInput() throws IllegalArgumentException, NullPointerException {
+        String solvableWord = solvableTextField.getText();
+        if (!solvableWord.isEmpty()) {
+            // checking if word contains only characters
+            for (int i = 0; i < solvableWord.length(); i++) {
+                if (!Character.isLetter(solvableWord.charAt(i))) {
+                    throw new IllegalArgumentException();
+                }
+            }
+            solvableTextField.setText("");
+        } else {
+            throw new NullPointerException();
+        }
+        return solvableWord;
+    }
 }

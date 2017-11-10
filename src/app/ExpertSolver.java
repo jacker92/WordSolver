@@ -12,7 +12,8 @@ public class ExpertSolver {
         this.expertModeWindow = expertModeWindow;
     }
 
-    public List<String> getAllPossibleWordsByLength(int index) {
+    public List<String> getAllPossibleWordsByLength() {
+        int index =  expertModeWindow.getWordLengthComboBox().getSelectionModel().getSelectedIndex();
         possibleWords = expertModeWindow.getSolver().getAllWordsInFinnish();
         possibleWords = possibleWords.stream().filter(n -> n.length() > index)
                 .map(n -> n.substring(0, index+1).replaceAll("-", "")).collect(Collectors.toCollection(HashSet::new));
