@@ -57,8 +57,7 @@ public class Solver {
 
                 for (int k = 0; k < i; k++) {
                     int index = r.nextInt(wordCharactersCopy.size());
-                    newWord.append(wordCharactersCopy.get(index));
-                    wordCharactersCopy.remove(index);
+                    newWord.append(wordCharactersCopy.remove(index));
                 }
 
                 setToReturn.add(newWord.toString());
@@ -68,9 +67,7 @@ public class Solver {
                 newWord.replace(0, newWord.length(), "");
             }
         }
-
         return setToReturn;
-
     }
 
     public boolean isFinnish(String word) {

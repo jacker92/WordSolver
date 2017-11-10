@@ -41,18 +41,16 @@ public class Main extends Application {
 
         showResultsWindow.getBackButton().setOnAction(event -> {
             primary.setScene(insertWordScene);
-            insertWordsWindow.getSolvableTextField().setText("");
-            insertWordsWindow.getSolvableTextField().requestFocus();
-            
+            insertWordsWindow.changeView();
         });
 
         showResultsWindow.getCharacterCountTextField().setOnAction(event -> {
             filterByCharacterCount();
-            listViewScrollBarReset();
+            showResultsWindow.listViewScrollBarReset();
         });
         
         showResultsWindow.getExpertButton().setOnAction(event -> {
-            expertModeWindow.setComboBoxItems();
+            expertModeWindow.changeView();
             primary.setScene(expertModeScene);
         });
         
@@ -77,11 +75,6 @@ public class Main extends Application {
         primary.show();
     }
 
-    private void listViewScrollBarReset() {
-        ScrollBar scroll = (ScrollBar) showResultsWindow.getListView().lookupAll(".scroll-bar").iterator().next();
-        scroll.setValue(0);
-    }
-
     public static void main(String[] args) {
         launch();
     }
@@ -98,11 +91,10 @@ public class Main extends Application {
                     return;
                 }
             }
-            showResultsWindow.setWord(solvableWord);
-            showResultsWindow.getCharacterCountTextField().requestFocus();
+            showResultsWindow.changeView(solvableWord);
             primary.setScene(showResultsScene);
-            showResultsWindow.processWord();
-            listViewScrollBarReset();
+        } else {
+            new Alert(Alert.AlertType.ERROR,"Please enter some characters!").showAndWait();
         }
     }
 
@@ -110,7 +102,7 @@ public class Main extends Application {
         try {
             int luku = Integer.parseInt(showResultsWindow.getCharacterCountTextField().getText());
             // Proceed only if number user gave is not bigger than word length
-            if (luku <= showResultsWindow.getWord().length()) {
+            if (luku <= showResultsWindow.getSolver().getWord().length()) {
                 showResultsWindow.getListView().getItems().clear();
                 showResultsWindow.getListView().getItems().addAll(
                         showResultsWindow.getAllPossibleWords().stream().filter(n -> n.length() == luku)

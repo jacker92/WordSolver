@@ -15,7 +15,6 @@ public class ShowResultsWindow {
     private TextField characterCountTextField;
     private Label filterLabel;
     private Solver solver;
-    private String word;
     private List<String> allPossibleWords;
 
     public ShowResultsWindow() {
@@ -31,10 +30,10 @@ public class ShowResultsWindow {
     public Parent getParent() {
         FlowPane pane = new FlowPane();
         GridPane grid = new GridPane();
-        
+
         grid.setVgap(10);
         grid.setHgap(10);
-        
+
         listView.setPrefSize(100, 100);
 
         grid.add(listView, 0, 0);
@@ -50,10 +49,6 @@ public class ShowResultsWindow {
     public ListView getListView() {
         return listView;
     }
-    
-    public void setWord(String word) {
-        this.word = word;
-    }
 
     public Button getBackButton() {
         return backButton;
@@ -66,13 +61,9 @@ public class ShowResultsWindow {
     public void setListView(ListView listView) {
         this.listView = listView;
     }
-    
+
     public List<String> getAllPossibleWords() {
         return allPossibleWords;
-    }
-
-    public String getWord() {
-        return word;
     }
 
     public Button getExpertButton() {
@@ -82,14 +73,30 @@ public class ShowResultsWindow {
     public Solver getSolver() {
         return solver;
     }
-    
-   public void processWord() {
-      Set<String> list =  solver.solveWord(this.word, 10000);
-     allPossibleWords = list.stream().filter(s -> solver.isFinnish(s))
-    .collect(Collectors.toCollection(ArrayList::new));
-     Collections.sort(allPossibleWords, new ComparatorByLength());
-     listView.getItems().clear();
-     listView.getItems().addAll(allPossibleWords);
+
+    public void processWord(String word) {
+        Set<String> list = solver.solveWord(word, 10000);
+        allPossibleWords = list.stream().filter(s -> solver.isFinnish(s))
+                .collect(Collectors.toCollection(ArrayList::new));
+        Collections.sort(allPossibleWords, new ComparatorByLength());
+        listView.getItems().clear();
+        listView.getItems().addAll(allPossibleWords);
+    }
+
+    public void listViewScrollBarReset() {
+        // Try-catch because scrollbar might not be there
+        try {
+        ScrollBar scroll = (ScrollBar) this.getListView().lookupAll(".scroll-bar").iterator().next();
+        scroll.setValue(0);
+        } catch (Exception e) {
+            
+        }
+    }
+
+    public void changeView(String solvableWord) {
+        getCharacterCountTextField().requestFocus();
+        processWord(solvableWord);
+        listViewScrollBarReset();
     }
 
 }

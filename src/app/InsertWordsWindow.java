@@ -1,47 +1,38 @@
 package app;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.geometry.*;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 
 public class InsertWordsWindow {
-    
+
     private Label label;
     private TextField solvableTextField;
     private Button button;
-    private GridPane stuff;
+    private GridPane gridPane;
     private FlowPane root;
-    
+
     public InsertWordsWindow() {
-        this.stuff = new GridPane();
+        this.gridPane = new GridPane();
         this.label = new Label("Please Enter a Word");
         this.solvableTextField = new TextField();
-        this.button = new Button("Solve"); 
+        this.button = new Button("Solve");
         this.root = new FlowPane();
     }
 
     public Parent getParent() {
-     
-        stuff.add(label, 0, 0);
-        stuff.add(solvableTextField, 0, 1);
-        stuff.add(button, 0, 2);
-        
-        stuff.setHgap(20);
-        stuff.setVgap(20);
-        stuff.setPadding(new Insets(20,20,20,20));
-        root.getChildren().add(stuff);
-        root.setAlignment(Pos.CENTER);
-        
-        return root;
-    }
 
-    public Label getLabel() {
-        return label;
+        gridPane.add(label, 0, 0);
+        gridPane.add(solvableTextField, 0, 1);
+        gridPane.add(button, 0, 2);
+        gridPane.setHgap(20);
+        gridPane.setVgap(20);
+        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        root.getChildren().add(gridPane);
+        root.setAlignment(Pos.CENTER);
+
+        return root;
     }
 
     public TextField getSolvableTextField() {
@@ -52,11 +43,8 @@ public class InsertWordsWindow {
         return button;
     }
 
-    public GridPane getStuff() {
-        return stuff;
+    public void changeView() {
+        solvableTextField.setText("");
+        solvableTextField.requestFocus();
     }
-    
-    
-    
-    
 }

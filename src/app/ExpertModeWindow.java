@@ -94,6 +94,7 @@ public class ExpertModeWindow {
         }
         wordLengthComboBox.getItems().clear();
         wordLengthComboBox.getItems().addAll(list);
+
     }
 
     protected void setListViewItems(List<String> list) {
@@ -103,6 +104,12 @@ public class ExpertModeWindow {
 
     public Solver getSolver() {
         return solver;
+    }
+
+    public void changeView() {
+        setComboBoxItems();
+          wordLengthComboBox.getSelectionModel().selectFirst();
+        listView.getItems().clear();
     }
     
     

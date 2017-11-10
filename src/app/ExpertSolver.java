@@ -44,8 +44,7 @@ public class ExpertSolver {
 
             for (int k = 0; k < wordLength; k++) {
                 int index = r.nextInt(wordCharactersCopy.size());
-                newWord.append(wordCharactersCopy.get(index));
-                wordCharactersCopy.remove(index);
+                newWord.append(wordCharactersCopy.remove(index));
             }
             setToReturn.add(newWord.toString());
             count++;
