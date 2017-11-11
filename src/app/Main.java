@@ -1,6 +1,5 @@
 package app;
 
-import java.util.*;
 import javafx.application.Application;
 import javafx.scene.*;
 import javafx.scene.control.*;
@@ -54,7 +53,7 @@ public class Main extends Application {
         });
         
         expertModeWindow.getSearchButton().setOnAction(event -> {
-            handleExpertSearching();
+            expert.handleExpertSearching();
         });
 
         insertWordScene.setOnKeyPressed(event -> {
@@ -89,10 +88,5 @@ public class Main extends Application {
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Please enter valid number!").showAndWait();
         }
-    }
-
-    private void handleExpertSearching() {
-        List<String> list = expert.getAllPossibleWordsByLength();
-        expertModeWindow.setListViewItems(list);
     }
 }

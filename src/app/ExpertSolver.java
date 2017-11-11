@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ExpertSolver {
-    
+
     private ExpertModeWindow expertModeWindow;
     private Set<String> possibleWords;
 
@@ -13,12 +13,18 @@ public class ExpertSolver {
     }
 
     public List<String> getAllPossibleWordsByLength() {
-        int index =  expertModeWindow.getWordLengthComboBox().getSelectionModel().getSelectedIndex();
+        int index = expertModeWindow.getWordLengthComboBox().getSelectionModel().getSelectedIndex();
         possibleWords = expertModeWindow.getSolver().getAllWordsInFinnish();
         possibleWords = possibleWords.stream().filter(n -> n.length() > index)
-                .map(n -> n.substring(0, index+1).replaceAll("-", "")).collect(Collectors.toCollection(HashSet::new));
-        Set<String> listofAllWords = solveWord(expertModeWindow.getSolver().getWord(), 100000*(index+1), index+1);
-        return listofAllWords.stream().filter(s -> this.isPossiblyFinnish(s)).collect(Collectors.toCollection(ArrayList::new));
+                .map(n -> n.substring(0, index + 1).replaceAll("-", "")).collect(Collectors.toCollection(HashSet::new));
+        Set<String> listofAllWords = solveWord(expertModeWindow.getSolver().getWord(), 100000 * (index + 1), index + 1);
+
+        // Checking the combobox language selection
+        if (expertModeWindow.getLanguageComboBox().getSelectionModel().getSelectedIndex() == 0) {
+            return listofAllWords.stream().filter(s -> this.isPossiblyFinnish(s)).collect(Collectors.toCollection(ArrayList::new));
+        } else {
+            return listofAllWords.stream().collect(Collectors.toCollection(ArrayList::new));
+        }
     }
 
     public boolean isPossiblyFinnish(String word) {
@@ -35,7 +41,7 @@ public class ExpertSolver {
         List<Character> wordCharactersCopy = new ArrayList<>();
 
         wordCharacters.clear();
-      
+
         for (int j = 0; j < word.length(); j++) {
             wordCharacters.add(word.charAt(j));
         }
@@ -55,6 +61,11 @@ public class ExpertSolver {
 
         return setToReturn;
 
+    }
+
+    public void handleExpertSearching() {
+       List<String> list = getAllPossibleWordsByLength();
+        expertModeWindow.setListViewItems(list);
     }
 
 }

@@ -15,6 +15,8 @@ public class ExpertModeWindow {
     private Button backToNormalModeButton;
     private Label wordLengthLabel;
     private Solver solver;
+    private Label languageLabel;
+    private ComboBox languageComboBox;
 
     public ExpertModeWindow(Solver ratkaisin) {
         this.listView = new ListView();
@@ -23,6 +25,9 @@ public class ExpertModeWindow {
         this.backToNormalModeButton = new Button("Back to normal mode");
         this.wordLengthLabel = new Label("Word length");
         this.solver = ratkaisin;
+        this.languageLabel = new Label("Select language");
+        this.languageComboBox = new ComboBox();
+        
     }
 
     protected Parent getParent() {
@@ -31,13 +36,19 @@ public class ExpertModeWindow {
 
         grid.setVgap(10);
         grid.setHgap(10);
-
+        
+        languageComboBox.getItems().add("Finnish");
+        languageComboBox.getItems().add("Gibberish");
+        languageComboBox.getSelectionModel().selectFirst();
+        
         listView.setPrefSize(100, 100);
         grid.add(wordLengthLabel, 0, 0);
         grid.add(wordLengthComboBox, 1, 0);
+        grid.add(languageLabel, 0, 1);
+        grid.add(languageComboBox, 1, 1);
         grid.add(listView, 0, 2);
         grid.add(searchButton, 0, 3);
-        grid.add(backToNormalModeButton, 0, 4);
+        grid.add(backToNormalModeButton, 1, 3);
 
         pane.setAlignment(Pos.CENTER);
 
@@ -94,7 +105,6 @@ public class ExpertModeWindow {
         }
         wordLengthComboBox.getItems().clear();
         wordLengthComboBox.getItems().addAll(list);
-
     }
 
     protected void setListViewItems(List<String> list) {
@@ -111,7 +121,8 @@ public class ExpertModeWindow {
           wordLengthComboBox.getSelectionModel().selectFirst();
         listView.getItems().clear();
     }
-    
-    
 
+    public ComboBox getLanguageComboBox() {
+        return languageComboBox;
+    }
 }
