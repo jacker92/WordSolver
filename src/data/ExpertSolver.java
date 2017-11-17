@@ -1,5 +1,6 @@
-package app;
+package data;
 
+import ui.ExpertModeWindow;
 import java.util.*;
 import java.util.stream.Collectors;
 

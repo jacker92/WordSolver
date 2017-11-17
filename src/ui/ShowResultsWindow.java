@@ -1,5 +1,7 @@
-package app;
+package ui;
 
+import data.ComparatorByLength;
+import data.Solver;
 import java.util.*;
 import java.util.stream.Collectors;
 import javafx.geometry.Pos;

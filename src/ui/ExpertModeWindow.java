@@ -1,5 +1,6 @@
-package app;
+package ui;
 
+import data.Solver;
 import java.util.*;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -30,7 +31,7 @@ public class ExpertModeWindow {
         
     }
 
-    protected Parent getParent() {
+    public Parent getParent() {
         FlowPane pane = new FlowPane();
         GridPane grid = new GridPane();
 
@@ -97,7 +98,7 @@ public class ExpertModeWindow {
         this.wordLengthLabel = wordLengthLabel;
     }
 
-    protected void setComboBoxItems() {
+    public void setComboBoxItems() {
         int count = solver.getWord().length();
         List<Integer> list = new ArrayList<>();
         for (int i = 1; i <= count; i++) {
@@ -107,7 +108,7 @@ public class ExpertModeWindow {
         wordLengthComboBox.getItems().addAll(list);
     }
 
-    protected void setListViewItems(List<String> list) {
+    public void setListViewItems(List<String> list) {
         listView.getItems().clear();
         listView.getItems().setAll(list);
     }

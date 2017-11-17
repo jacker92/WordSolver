@@ -1,5 +1,9 @@
 package app;
 
+import data.ExpertSolver;
+import ui.ShowResultsWindow;
+import ui.InsertWordsWindow;
+import ui.ExpertModeWindow;
 import javafx.application.Application;
 import javafx.scene.*;
 import javafx.scene.control.*;
